@@ -2,49 +2,144 @@
 
 ## EDUZZA Capstone Project
 
-This repository contains the planning and documentation for the **AI-Powered Learning Management System (LMS)** Capstone Project.
+The **AI-Powered Learning Management System (LMS)** is a production-style Capstone Project combining traditional learning-management functionality with meaningful AI-assisted learning.
 
-The project is intended to become a production-style learning platform that combines traditional LMS functionality with meaningful AI-assisted learning.
+The project is designed around three primary roles:
+
+- Student
+- Instructor
+- Admin
+
+---
 
 ## Project Objective
 
-The final application is expected to include:
+The final application will demonstrate:
 
-- React frontend
-- Python REST API
-- Relational database
-- Database relationships and migrations
-- JWT-based authentication
+- React Frontend
+- Python Flask REST API
+- PostgreSQL
+- SQLAlchemy
+- Database relationships
+- Database migrations
+- JWT authentication
 - Role-based authorization
-- At least one meaningful AI/agentic feature
-- Dockerisation
+- AI/Agentic functionality
+- Docker
 - Cloud deployment
-- Automated tests
-- Professional project documentation
+- Automated testing
+- Professional documentation
+
+---
 
 ## Product Vision
 
-The LMS supports three primary user roles:
+The system is intended to support the following Student journey:
 
-- **Student**
-- **Instructor**
-- **Admin**
+```text
+Register
+   ↓
+Login
+   ↓
+Browse Courses
+   ↓
+Enroll
+   ↓
+Learn
+   ↓
+Complete Lessons
+   ↓
+Attempt Quiz
+   ↓
+Track Progress
+   ↓
+Ask AI Tutor
+```
 
-Students should be able to discover courses, enroll, learn through structured modules and lessons, attempt quizzes, track progress, and ask an AI Learning Assistant for help.
+Instructor journey:
 
-Instructors should be able to create and organize courses, publish learning content, create assessments, and monitor student progress.
+```text
+Login
+   ↓
+Create Course
+   ↓
+Create Modules
+   ↓
+Create Lessons
+   ↓
+Create Quiz
+   ↓
+Publish
+   ↓
+Monitor Students
+```
 
-Administrators should have basic platform-level visibility and governance capabilities.
+---
 
-The AI layer is intended to enhance learning rather than act as a disconnected chatbot.
+## Phase 1 — Product Discovery, Requirements & Scope
 
-## Phase 1 — Product Discovery, Requirements & Scope Definition
+Phase 1 defined:
 
-Phase 1 focuses on understanding **what needs to be built and why** before moving into architecture and implementation.
+- Product requirements
+- Personas
+- User problems
+- User stories
+- Feature priorities
+- MVP boundaries
+- AI vision
+- Out-of-scope functionality
 
-No production coding is required for Phase 1.
+Phase 1 documents:
 
-The Phase 1 deliverables are stored in the `docs/` directory:
+```text
+docs/
+├── PRD.md
+├── user-stories.md
+├── features.md
+└── scope.md
+```
+
+---
+
+## Phase 2 — System Architecture, Database Design & API Design
+
+Phase 2 converts the approved product requirements into a technical blueprint.
+
+It defines:
+
+- High-level system architecture
+- Component responsibilities
+- Frontend/backend communication
+- Authentication architecture
+- Role-based authorization
+- Relational database design
+- Primary and foreign keys
+- Database relationships
+- Data constraints
+- Database migration strategy
+- Entity Relationship Diagram
+- REST API contract
+- API authorization rules
+- Standard error responses
+- AI integration boundary
+- AI Tutor access control
+- Failure behaviour
+
+---
+
+## Phase 2 Repository Documents
+
+```text
+docs/
+├── architecture.md
+├── database-design.md
+├── ER-diagram.png
+└── API-design.md
+```
+
+---
+
+## Current Repository Structure
 
 ```text
 ai-powered-lms/
@@ -53,109 +148,160 @@ ai-powered-lms/
 │   ├── PRD.md
 │   ├── user-stories.md
 │   ├── features.md
-│   └── scope.md
+│   ├── scope.md
+│   ├── architecture.md
+│   ├── database-design.md
+│   ├── ER-diagram.png
+│   └── API-design.md
 │
 └── README.md
 ```
 
-## Phase 1 Documents
+---
 
-### `docs/PRD.md`
+## Reference Architecture
 
-Contains the Product Requirements Document, including:
+```text
+                         USERS
+                           │
+                           ▼
+                    React Frontend
+                           │
+                      HTTPS / JSON
+                           │
+                           ▼
+                    Flask REST API
+                     /           \
+                    /             \
+                   ▼               ▼
+             PostgreSQL        AI Service
+                                  │
+                                  ▼
+                             Vector Store
+                                  │
+                                  ▼
+                                 LLM
+```
 
-- Product overview
-- Problem statement
-- Product vision
-- Target users
-- User problems
-- Product goals
-- Core user journeys
-- AI vision
-- Success criteria
+The Flask backend is the authoritative application layer.
 
-### `docs/user-stories.md`
+React does not directly access PostgreSQL.
 
-Contains prioritized user stories for:
+AI functionality does not bypass normal authorization rules.
 
-- Students
-- Instructors
-- Admins
-- AI-related functionality
-- Overall system behavior
-- Explicitly out-of-scope functionality
+---
 
-Priority categories used:
+## Core Database Model
 
-- **MUST HAVE**
-- **SHOULD HAVE**
-- **COULD HAVE**
-- **OUT OF SCOPE**
+The core entities are:
 
-### `docs/features.md`
+```text
+User
+Course
+Module
+Lesson
+Enrollment
+LessonProgress
+Quiz
+Question
+AnswerOption
+QuizAttempt
+StudentAnswer
+AIConversation
+AIMessage
+```
 
-Contains the feature catalogue organized by system:
+Important relationships include:
 
-1. Authentication & Authorization
-2. Course Management
-3. Module & Lesson Management
-4. Course Enrollment
-5. Learning & Content Delivery
-6. Quiz & Assessment
-7. Progress Tracking
-8. AI Features
-9. Admin Features
-10. Integrations
-11. DevOps / Production Requirements
+```text
+Instructor → Courses
+Course → Modules
+Module → Lessons
+Student → Enrollment → Course
+Student → LessonProgress → Lesson
+Course → Quiz → Question → AnswerOption
+Student → QuizAttempt → StudentAnswer
+Student + Course → AIConversation → AIMessage
+```
 
-### `docs/scope.md`
+---
 
-Defines the project boundaries:
+## Authentication & Authorization
 
-- Mandatory MVP
-- Optional / Should Have features
-- Stretch goals
-- Explicitly out-of-scope functionality
-- MVP user journeys
-- AI scope boundary
-- Scope control rules
+The project uses JWT-based authentication.
 
-## Mandatory MVP Summary
+Roles:
 
-The core product should support the following end-to-end student journey:
+```text
+STUDENT
+INSTRUCTOR
+ADMIN
+```
 
-**Register → Login → Browse → View Course → Enroll → Learn → Complete Lessons → Attempt Quiz → View Score → Track Progress → Ask AI Tutor**
+Authentication answers:
 
-The core instructor journey should be:
+> **Who is the user?**
 
-**Login → Create Course → Add Modules → Add Lessons → Create Quiz → Publish → View Students and Progress**
+Authorization answers:
 
-The core Admin journey should be:
+> **What is the user allowed to do?**
 
-**Login → View Users → View Courses → Perform Basic Administration**
+Backend authorization is mandatory even when the frontend hides inaccessible functionality.
 
-## AI Vision
+---
 
-The primary AI capability is a **Course-Aware AI Learning Assistant**.
+## AI Architecture
 
-The AI should help students:
+The flagship AI functionality is a:
 
-- Ask course-related questions
-- Understand difficult concepts
-- Receive simpler explanations
+### Course-Aware AI Tutor
 
-A secondary optional capability is an **AI Quiz Generator** for instructors. AI-generated questions should be reviewed by the instructor before becoming official course content.
+Conceptual flow:
 
-## Scope Principle
+```text
+Student Question
+      ↓
+Authentication
+      ↓
+Enrollment Check
+      ↓
+Course-Specific Retrieval
+      ↓
+Relevant Course Context
+      ↓
+LLM
+      ↓
+AI Answer
+```
 
-The project follows one key rule:
+The AI system must not provide restricted Course content to an unauthorized Student.
 
-> **A complete smaller product is better than an incomplete larger product.**
+---
 
-The project will not attempt to recreate all functionality of Udemy, Coursera, Moodle, Google Classroom, or ChatGPT.
+## Phase 2 Status
 
-## Current Status
+**Phase 2 — Complete**
 
-**Phase 1: Product Discovery, Requirements & Scope Definition**
+The project now has a documented technical blueprint covering:
 
-The current repository establishes the product definition and MVP boundaries before system architecture, database design, backend development, frontend development, AI implementation, testing, Dockerisation, and cloud deployment begin.
+```text
+Product Requirements
+        ↓
+Architecture
+        ↓
+Database Model
+        ↓
+Entity Relationships
+        ↓
+REST API Contract
+        ↓
+Authentication / Authorization
+        ↓
+AI Integration Boundary
+```
+
+The project is ready to proceed to:
+
+## Phase 3 — Backend Development
+
+The next phase will convert the approved technical design into a working Flask REST API and relational database implementation.
