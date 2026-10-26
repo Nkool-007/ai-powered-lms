@@ -1,10 +1,10 @@
 # AI-Powered Learning Management System (LMS)
 
-## EDUZZA Capstone Project — Implementation Through Phase 3
+## EDUZZA Capstone Project — Implementation Through Phase 4
 
 The **AI-Powered Learning Management System (LMS)** is a production-style EDUZZA capstone project designed to combine conventional learning-management functionality with meaningful AI-assisted learning.
 
-**Current milestone: Phase 3 — Backend Development (Complete).** The project has completed product discovery, technical design, and a working Python Flask REST backend. The **React frontend and Course-Aware AI Tutor are planned for later phases** and are **not represented as implemented in Phase 3**.
+**Current milestone: Phase 4 — React Frontend Development (Complete).** The project has completed product discovery, technical design, a working Python Flask REST backend, and a structured React frontend. **Phase 5 — Full-Stack Integration is next.** The Course-Aware AI Tutor and later production/deployment capabilities remain planned for subsequent phases.
 
 The system is designed around three user roles:
 
@@ -21,8 +21,9 @@ The system is designed around three user roles:
 | **Phase 1** | Product Discovery, Requirements & Scope | **Complete** |
 | **Phase 2** | System Architecture, Database Design & API Design | **Complete** |
 | **Phase 3** | Flask REST API & Relational Backend Implementation | **Complete** |
-| **Phase 4** | React Frontend Development | **Next** |
-| **Later phases** | Course-Aware AI Tutor, additional production/deployment capabilities | **Planned; not part of Phase 3** |
+| **Phase 4** | React Frontend Development | **Complete** |
+| **Phase 5** | Full-Stack Integration | **Next** |
+| **Later phases** | Course-Aware AI Tutor, additional production/deployment capabilities | **Planned** |
 
 ### Project objectives
 
@@ -37,13 +38,13 @@ The **overall project vision** includes:
 - AI/agentic learning functionality.
 - Docker, cloud deployment, automated testing, and professional documentation.
 
-**Implementation boundary:** Phase 3 provides the independently demonstrable backend and its tests. Mention of React, the AI Tutor, vector retrieval, an LLM, Docker, or cloud deployment elsewhere in this README describes the *overall vision* unless explicitly labeled as implemented.
+**Implementation boundary:** Phase 4 adds the React user interface on top of the completed Phase 3 backend architecture. Full-stack integration hardening, the Course-Aware AI Tutor, vector retrieval, LLM integration, Docker, and cloud deployment remain later-phase work unless explicitly labeled as implemented.
 
 ---
 
 ## 2. Technology Stack
 
-| Area | Technology | Phase 3 status |
+| Area | Technology | Status through Phase 4 |
 | --- | --- | --- |
 | Backend | **Python 3.11+ / Flask** | Implemented |
 | API | **REST / JSON** | Implemented |
@@ -53,7 +54,11 @@ The **overall project vision** includes:
 | Authentication | **JWT** | Implemented |
 | Password security | **Werkzeug password hashing** | Implemented |
 | Tests | **pytest**; SQLite in-memory by default, optional PostgreSQL test DB | Included |
-| Frontend | **React** | Planned for Phase 4 |
+| Frontend | **React / Vite** | Implemented |
+| Frontend routing | **React Router** | Implemented |
+| Frontend HTTP client | **Axios** | Implemented |
+| Frontend auth state | **React Context API** | Implemented |
+| Frontend styling | **Bootstrap + custom CSS** | Implemented |
 | AI learning support | **Course-Aware AI Tutor / LLM integration** | Planned for later phase |
 | AI retrieval | **Course-specific retrieval / potential vector store** | Conceptual only |
 | Containerization / hosting | **Docker / cloud deployment** | Overall project objectives; not claimed as delivered in Phase 3 |
@@ -84,7 +89,7 @@ Track Progress
 Ask AI Tutor  (planned for a later phase)
 ```
 
-The backend workflows through quiz attempts and progress tracking are covered in Phase 3. The browser-based React experience and AI Tutor are future work.
+The backend workflows through quiz attempts and progress tracking are covered in Phase 3. The browser-based React experience is implemented in Phase 4. The Course-Aware AI Tutor remains future work.
 
 ### Instructor journey — target end-to-end experience
 
@@ -104,7 +109,7 @@ Publish
 Monitor Students
 ```
 
-Phase 3 supports these instructor operations through REST endpoints; the frontend interface is planned for Phase 4.
+Phase 3 supports these instructor operations through REST endpoints, and Phase 4 adds the corresponding React instructor interface.
 
 ---
 
@@ -214,7 +219,7 @@ Phase 3 converts the approved architecture into a working Flask REST API backed 
 - Alembic/Flask-Migrate database migrations.
 - Standardized API errors.
 
-**Not included yet:** React frontend and AI Tutor functionality. The Phase 3 backend is intentionally independently usable via API clients such as Postman.
+**Phase boundary:** Phase 3 remains independently usable via API clients such as Postman. The React frontend is implemented in Phase 4; AI Tutor functionality remains planned for a later phase.
 
 ### Implemented backend request flow
 
@@ -241,7 +246,7 @@ Browser / Postman / API Client
 
 ## 7. Repository Layout
 
-The documentation and backend entry points explicitly referenced by the Phase 1–3 READMEs are:
+The repository now contains product/design documentation, the Phase 3 backend, and the Phase 4 React frontend:
 
 ```text
 ai-powered-lms/
@@ -257,15 +262,32 @@ ai-powered-lms/
 │   └── API-design.md
 │
 ├── backend/
+│   ├── app/
+│   ├── migrations/
+│   ├── tests/
 │   ├── .env.example
 │   ├── requirements.txt
 │   ├── run.py
 │   └── POSTMAN-DEMO.md
 │
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── context/
+│   │   ├── layouts/
+│   │   ├── pages/
+│   │   ├── routes/
+│   │   ├── services/
+│   │   ├── styles/
+│   │   ├── utils/
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   ├── .env.example
+│   ├── package.json
+│   └── README.md
+│
 └── README.md
 ```
-
-*This is a reference layout showing named files from the supplied READMEs, not an exhaustive inventory of backend source, migrations, or test modules.*
 
 ---
 
@@ -689,11 +711,13 @@ The system architecture, database relationships, API design, authorization rules
 
 The Flask REST backend provides authentication, course management, modules, lessons, enrollment, progress tracking, quizzes, basic Admin visibility, persistence, migrations, and API testing guidance.
 
-### Phase 4 next — React Frontend Development
+### Phase 4 complete — React Frontend Development
 
-Build the React interface on top of the completed REST API so that students and instructors can use these workflows through a browser rather than only through API clients.
+The React frontend now provides Public, Student, and Instructor experiences with React Router, authentication state, protected and role-aware routes, reusable components, centralized services, responsive layouts, and loading/error/empty states.
 
-The AI Tutor, Docker, and cloud deployment remain part of the broader project objectives; **they are not claimed as Phase 3 deliverables**.
+### Phase 5 next — Full-Stack Integration
+
+Phase 5 will focus on making the React frontend and Flask backend operate reliably together end to end. The AI Tutor, Docker, and cloud deployment remain part of the broader project objectives and are not claimed as Phase 4 deliverables.
 
 ---
 
@@ -708,4 +732,269 @@ The AI Tutor, Docker, and cloud deployment remain part of the broader project ob
 
 ---
 
-**EDUZZA Capstone Project — Documentation and backend implementation completed through Phase 3.**
+**EDUZZA Capstone Project — Documentation, backend implementation, and React frontend completed through Phase 4.**
+
+---
+
+## 16. Phase 4 Frontend Reference
+
+This section consolidates the dedicated Phase 4 frontend README into the master project documentation.
+
+### Technology Stack
+
+- Frontend: React
+- Build Tool: Vite
+- Routing: React Router
+- HTTP Client: Axios
+- Shared Authentication State: React Context API
+- Styling: Bootstrap + custom CSS
+- Backend: Python Flask REST API
+
+### Current Project Status
+
+- Phase 1 — Complete — Product Discovery, Requirements and Scope
+- Phase 2 — Complete — Architecture, Database Design and API Design
+- Phase 3 — Complete — Flask REST Backend
+- Phase 4 — Complete — React Frontend Development
+- Phase 5 — Next — Full-Stack Integration
+
+### Phase 4 Features
+
+#### Public Experience
+- Landing Page
+- Login
+- Registration
+- Course Catalog
+- Course Details
+
+#### Student Experience
+- Student Dashboard
+- My Courses
+- Lesson Viewer
+- Course Progress
+- Quiz Interface
+- Quiz Result
+- AI Tutor UI placeholder
+
+#### Instructor Experience
+- Instructor Dashboard
+- Create Course
+- Course Editor
+- Module Manager
+- Lesson Manager
+- Quiz Manager
+- Student Progress View
+- AI Quiz Generator UI placeholder
+
+#### Application Architecture
+- React Router
+- Authentication Context
+- Protected Routes
+- Role-Aware Routes
+- Reusable Components
+- Services Layer
+- Loading States
+- Error States
+- Empty States
+- Responsive UI
+
+### Prerequisites
+
+- Node.js 18+
+- npm
+- A running Phase 3 Flask backend when real API calls are tested.
+
+### Installation
+
+```bash
+cd frontend
+npm install
+```
+
+### Environment Configuration
+
+Create `.env` from `.env.example`.
+
+```text
+VITE_API_BASE_URL=http://localhost:5000/api/v1
+```
+
+Do not hard-code API URLs across components.
+
+### Start Development Server
+
+```bash
+npm run dev
+```
+
+Typical Vite URL: `http://localhost:5173`
+
+### Production Build
+
+```bash
+npm run build
+```
+
+Output: `dist/`
+
+### Public Routes
+
+```text
+/
+/login
+/register
+/courses
+/courses/:courseId
+```
+
+### Student Routes
+
+```text
+/student/dashboard
+/student/courses
+/student/progress
+/student/ai
+/courses/:courseId/lessons/:lessonId
+/quizzes/:quizId
+```
+
+These routes require the `STUDENT` role.
+
+### Instructor Routes
+
+```text
+/instructor/dashboard
+/instructor/courses/new
+/instructor/courses/:courseId/edit
+/instructor/courses/:courseId/quiz
+/instructor/courses/:courseId/students
+/instructor/ai-quiz
+```
+
+These routes require the `INSTRUCTOR` role.
+
+### Authentication Flow
+
+```text
+Login Form
+   ↓
+POST /auth/login
+   ↓
+JWT + User Returned
+   ↓
+JWT Stored
+   ↓
+AuthContext Updated
+   ↓
+Role-Aware Redirect
+```
+
+The access token is stored under `smartlms_access_token`.
+
+On browser refresh:
+
+```text
+Read Token
+   ↓
+GET /auth/me
+   ↓
+Restore User
+```
+
+If the token is invalid, the frontend clears authentication state.
+
+### Security Principle
+
+React routing is not authorization. React protects the user experience; Flask remains the authoritative authorization layer.
+
+### Services Layer
+
+```text
+services/
+├── api.js
+├── authService.js
+├── courseService.js
+├── enrollmentService.js
+└── quizService.js
+```
+
+Pages call service functions instead of scattering independent Axios requests through components.
+
+### APIs Used
+
+#### Authentication
+```text
+POST /auth/register
+POST /auth/login
+GET /auth/me
+```
+
+#### Courses
+```text
+GET /courses
+GET /courses/{id}
+POST /courses
+PUT /courses/{id}
+DELETE /courses/{id}
+PATCH /courses/{id}/publish
+GET /instructor/courses
+```
+
+#### Modules
+```text
+GET /courses/{course_id}/modules
+POST /courses/{course_id}/modules
+PUT /modules/{id}
+DELETE /modules/{id}
+```
+
+#### Lessons
+```text
+GET /modules/{module_id}/lessons
+POST /modules/{module_id}/lessons
+GET /lessons/{id}
+PUT /lessons/{id}
+DELETE /lessons/{id}
+```
+
+#### Enrollment
+```text
+POST /courses/{course_id}/enroll
+GET /students/me/courses
+GET /courses/{course_id}/students
+```
+
+#### Progress
+```text
+POST /lessons/{lesson_id}/complete
+GET /courses/{course_id}/progress
+GET /courses/{course_id}/students/{student_id}/progress
+```
+
+#### Quiz
+```text
+POST /courses/{course_id}/quizzes
+GET /quizzes/{quiz_id}
+POST /quizzes/{quiz_id}/submit
+GET /students/me/quiz-attempts
+```
+
+### Loading, Empty and Error States
+
+Important network-driven pages handle Loading, Success, Empty, and Error states.
+
+### Responsive Design
+
+The application is designed for desktop, tablet, and mobile using Bootstrap's responsive grid plus custom CSS.
+
+### AI Screens
+
+Phase 4 contains UI shells for the AI Tutor and AI Quiz Generator. Actual LLM, RAG, embeddings, retrieval, AI Quiz generation, and Agentic AI functionality are intentionally deferred to the later AI phase.
+
+### Known Integration Contract Gap
+
+The current backend provides `GET /quizzes/{quiz_id}` but does not currently provide `GET /courses/{course_id}/quizzes`. Course-level quiz discovery should therefore be reviewed during Phase 5 integration.
+
+### Phase 4 Engineering Principle
+
+Phase 4 focuses on sound React frontend architecture: routing, component design, authentication state, protected routes, role-aware navigation, Student UX, Instructor UX, forms, loading states, empty states, error states, responsive design, and service abstraction.
