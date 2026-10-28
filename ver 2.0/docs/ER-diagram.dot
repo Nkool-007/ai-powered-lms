@@ -1,0 +1,158 @@
+digraph SmartLMS_ER {
+  graph [rankdir=LR, bgcolor="white", pad=0.25, nodesep=0.35, ranksep=0.75, splines=polyline];
+  node [shape=plain, fontname="Helvetica"];
+  edge [fontname="Helvetica", fontsize=9, color="#5c667a", arrowsize=0.7];
+
+  USER [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6">
+      <TR><TD BGCOLOR="#e8eefc"><B>USER</B></TD></TR>
+      <TR><TD ALIGN="LEFT">PK id</TD></TR>
+      <TR><TD ALIGN="LEFT">name</TD></TR>
+      <TR><TD ALIGN="LEFT">UK email</TD></TR>
+      <TR><TD ALIGN="LEFT">password_hash</TD></TR>
+      <TR><TD ALIGN="LEFT">role</TD></TR>
+      <TR><TD ALIGN="LEFT">is_active</TD></TR>
+    </TABLE>
+  >];
+
+  COURSE [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6">
+      <TR><TD BGCOLOR="#e8eefc"><B>COURSE</B></TD></TR>
+      <TR><TD ALIGN="LEFT">PK id</TD></TR>
+      <TR><TD ALIGN="LEFT">title</TD></TR>
+      <TR><TD ALIGN="LEFT">FK instructor_id</TD></TR>
+      <TR><TD ALIGN="LEFT">status</TD></TR>
+      <TR><TD ALIGN="LEFT">published_at</TD></TR>
+    </TABLE>
+  >];
+
+  MODULE [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6">
+      <TR><TD BGCOLOR="#e8eefc"><B>MODULE</B></TD></TR>
+      <TR><TD ALIGN="LEFT">PK id</TD></TR>
+      <TR><TD ALIGN="LEFT">FK course_id</TD></TR>
+      <TR><TD ALIGN="LEFT">title</TD></TR>
+      <TR><TD ALIGN="LEFT">position</TD></TR>
+    </TABLE>
+  >];
+
+  LESSON [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6">
+      <TR><TD BGCOLOR="#e8eefc"><B>LESSON</B></TD></TR>
+      <TR><TD ALIGN="LEFT">PK id</TD></TR>
+      <TR><TD ALIGN="LEFT">FK module_id</TD></TR>
+      <TR><TD ALIGN="LEFT">title</TD></TR>
+      <TR><TD ALIGN="LEFT">content</TD></TR>
+      <TR><TD ALIGN="LEFT">position</TD></TR>
+    </TABLE>
+  >];
+
+  ENROLLMENT [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6">
+      <TR><TD BGCOLOR="#e8eefc"><B>ENROLLMENT</B></TD></TR>
+      <TR><TD ALIGN="LEFT">PK id</TD></TR>
+      <TR><TD ALIGN="LEFT">FK student_id</TD></TR>
+      <TR><TD ALIGN="LEFT">FK course_id</TD></TR>
+      <TR><TD ALIGN="LEFT">status</TD></TR>
+      <TR><TD ALIGN="LEFT">enrolled_at</TD></TR>
+    </TABLE>
+  >];
+
+  LESSON_PROGRESS [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6">
+      <TR><TD BGCOLOR="#e8eefc"><B>LESSON_PROGRESS</B></TD></TR>
+      <TR><TD ALIGN="LEFT">PK id</TD></TR>
+      <TR><TD ALIGN="LEFT">FK student_id</TD></TR>
+      <TR><TD ALIGN="LEFT">FK lesson_id</TD></TR>
+      <TR><TD ALIGN="LEFT">completed</TD></TR>
+    </TABLE>
+  >];
+
+  QUIZ [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6">
+      <TR><TD BGCOLOR="#e8eefc"><B>QUIZ</B></TD></TR>
+      <TR><TD ALIGN="LEFT">PK id</TD></TR>
+      <TR><TD ALIGN="LEFT">FK course_id</TD></TR>
+      <TR><TD ALIGN="LEFT">title</TD></TR>
+    </TABLE>
+  >];
+
+  QUESTION [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6">
+      <TR><TD BGCOLOR="#e8eefc"><B>QUESTION</B></TD></TR>
+      <TR><TD ALIGN="LEFT">PK id</TD></TR>
+      <TR><TD ALIGN="LEFT">FK quiz_id</TD></TR>
+      <TR><TD ALIGN="LEFT">question_text</TD></TR>
+      <TR><TD ALIGN="LEFT">position</TD></TR>
+    </TABLE>
+  >];
+
+  ANSWER_OPTION [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6">
+      <TR><TD BGCOLOR="#e8eefc"><B>ANSWER_OPTION</B></TD></TR>
+      <TR><TD ALIGN="LEFT">PK id</TD></TR>
+      <TR><TD ALIGN="LEFT">FK question_id</TD></TR>
+      <TR><TD ALIGN="LEFT">option_text</TD></TR>
+      <TR><TD ALIGN="LEFT">is_correct</TD></TR>
+    </TABLE>
+  >];
+
+  QUIZ_ATTEMPT [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6">
+      <TR><TD BGCOLOR="#e8eefc"><B>QUIZ_ATTEMPT</B></TD></TR>
+      <TR><TD ALIGN="LEFT">PK id</TD></TR>
+      <TR><TD ALIGN="LEFT">FK quiz_id</TD></TR>
+      <TR><TD ALIGN="LEFT">FK student_id</TD></TR>
+      <TR><TD ALIGN="LEFT">score</TD></TR>
+    </TABLE>
+  >];
+
+  STUDENT_ANSWER [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6">
+      <TR><TD BGCOLOR="#e8eefc"><B>STUDENT_ANSWER</B></TD></TR>
+      <TR><TD ALIGN="LEFT">PK id</TD></TR>
+      <TR><TD ALIGN="LEFT">FK quiz_attempt_id</TD></TR>
+      <TR><TD ALIGN="LEFT">FK question_id</TD></TR>
+      <TR><TD ALIGN="LEFT">FK selected_option_id</TD></TR>
+      <TR><TD ALIGN="LEFT">is_correct</TD></TR>
+    </TABLE>
+  >];
+
+  AI_CONVERSATION [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6">
+      <TR><TD BGCOLOR="#f3edf9"><B>AI_CONVERSATION</B></TD></TR>
+      <TR><TD ALIGN="LEFT">PK id</TD></TR>
+      <TR><TD ALIGN="LEFT">FK student_id</TD></TR>
+      <TR><TD ALIGN="LEFT">FK course_id</TD></TR>
+    </TABLE>
+  >];
+
+  AI_MESSAGE [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6">
+      <TR><TD BGCOLOR="#f3edf9"><B>AI_MESSAGE</B></TD></TR>
+      <TR><TD ALIGN="LEFT">PK id</TD></TR>
+      <TR><TD ALIGN="LEFT">FK conversation_id</TD></TR>
+      <TR><TD ALIGN="LEFT">role</TD></TR>
+      <TR><TD ALIGN="LEFT">content</TD></TR>
+    </TABLE>
+  >];
+
+  USER -> COURSE;
+  COURSE -> MODULE;
+  MODULE -> LESSON;
+  USER -> ENROLLMENT;
+  COURSE -> ENROLLMENT;
+  USER -> LESSON_PROGRESS;
+  LESSON -> LESSON_PROGRESS;
+  COURSE -> QUIZ;
+  QUIZ -> QUESTION;
+  QUESTION -> ANSWER_OPTION;
+  USER -> QUIZ_ATTEMPT;
+  QUIZ -> QUIZ_ATTEMPT;
+  QUIZ_ATTEMPT -> STUDENT_ANSWER;
+  QUESTION -> STUDENT_ANSWER;
+  ANSWER_OPTION -> STUDENT_ANSWER;
+  USER -> AI_CONVERSATION;
+  COURSE -> AI_CONVERSATION;
+  AI_CONVERSATION -> AI_MESSAGE;
+}

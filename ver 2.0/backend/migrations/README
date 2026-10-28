@@ -1,0 +1,8 @@
+Single-database migration configuration for SmartLMS.
+
+The repository includes a seven-revision baseline matching the Phase 3 logical migration
+sequence. Use:
+
+    flask --app run.py db upgrade
+    flask --app run.py db current
+    flask --app run.py db history

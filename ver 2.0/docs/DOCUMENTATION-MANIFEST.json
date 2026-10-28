@@ -1,0 +1,23 @@
+{
+  "package": "SmartLMS Documentation \u2014 Phase 1 + Phase 2 + Phase 5",
+  "validation": "PASS",
+  "document_count": 15,
+  "phase1": [
+    "PRD.md",
+    "user-stories.md",
+    "features.md",
+    "scope.md"
+  ],
+  "phase2": [
+    "architecture.md",
+    "database-design.md",
+    "ER-diagram.png",
+    "API-design.md"
+  ],
+  "phase5": [
+    "phase5-integration-test-plan.md",
+    "phase5-integration-notes.md",
+    "README.md"
+  ],
+  "api_amendment": "GET /api/v1/courses/{course_id}/quizzes"
+}

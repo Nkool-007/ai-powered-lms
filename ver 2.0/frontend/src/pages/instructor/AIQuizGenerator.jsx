@@ -1,0 +1,32 @@
+export default function AIQuizGenerator() {
+  return (
+    <>
+      <h1 className="h2">
+        AI Quiz Generator
+      </h1>
+
+      <div className="card mt-4">
+        <div className="card-body">
+          <p>
+            Generate draft quiz questions
+            from lesson content.
+          </p>
+
+          <div className="alert alert-info">
+            AI generation will be implemented
+            during the AI phase. Instructor
+            review will be required before AI
+            questions are saved.
+          </div>
+
+          <button
+            className="btn btn-primary"
+            disabled
+          >
+            Generate Quiz With AI
+          </button>
+        </div>
+      </div>
+    </>
+  );
+}

@@ -1,0 +1,125 @@
+erDiagram
+  USER {
+    bigint id PK
+    varchar name
+    varchar email UK
+    varchar password_hash
+    varchar role
+    boolean is_active
+    timestamp created_at
+    timestamp updated_at
+  }
+  COURSE {
+    bigint id PK
+    varchar title
+    text description
+    bigint instructor_id FK
+    varchar status
+    timestamp published_at
+    timestamp created_at
+    timestamp updated_at
+  }
+  MODULE {
+    bigint id PK
+    bigint course_id FK
+    varchar title
+    text description
+    int position
+    timestamp created_at
+    timestamp updated_at
+  }
+  LESSON {
+    bigint id PK
+    bigint module_id FK
+    varchar title
+    text content
+    int position
+    timestamp created_at
+    timestamp updated_at
+  }
+  ENROLLMENT {
+    bigint id PK
+    bigint student_id FK
+    bigint course_id FK
+    varchar status
+    timestamp enrolled_at
+    timestamp completed_at
+  }
+  LESSON_PROGRESS {
+    bigint id PK
+    bigint student_id FK
+    bigint lesson_id FK
+    boolean completed
+    timestamp completed_at
+    timestamp last_accessed_at
+  }
+  QUIZ {
+    bigint id PK
+    bigint course_id FK
+    varchar title
+    text description
+    timestamp created_at
+    timestamp updated_at
+  }
+  QUESTION {
+    bigint id PK
+    bigint quiz_id FK
+    text question_text
+    varchar question_type
+    int position
+  }
+  ANSWER_OPTION {
+    bigint id PK
+    bigint question_id FK
+    text option_text
+    boolean is_correct
+    int position
+  }
+  QUIZ_ATTEMPT {
+    bigint id PK
+    bigint quiz_id FK
+    bigint student_id FK
+    decimal score
+    timestamp started_at
+    timestamp submitted_at
+  }
+  STUDENT_ANSWER {
+    bigint id PK
+    bigint quiz_attempt_id FK
+    bigint question_id FK
+    bigint selected_option_id FK
+    boolean is_correct
+  }
+  AI_CONVERSATION {
+    bigint id PK
+    bigint student_id FK
+    bigint course_id FK
+    timestamp created_at
+    timestamp updated_at
+  }
+  AI_MESSAGE {
+    bigint id PK
+    bigint conversation_id FK
+    varchar role
+    text content
+    timestamp created_at
+  }
+
+  USER ||--o{ COURSE : creates
+  COURSE ||--o{ MODULE : contains
+  MODULE ||--o{ LESSON : contains
+  USER ||--o{ ENROLLMENT : enrolls
+  COURSE ||--o{ ENROLLMENT : has
+  USER ||--o{ LESSON_PROGRESS : records
+  LESSON ||--o{ LESSON_PROGRESS : tracks
+  COURSE ||--o{ QUIZ : contains
+  QUIZ ||--o{ QUESTION : contains
+  QUESTION ||--o{ ANSWER_OPTION : provides
+  USER ||--o{ QUIZ_ATTEMPT : makes
+  QUIZ ||--o{ QUIZ_ATTEMPT : receives
+  QUIZ_ATTEMPT ||--o{ STUDENT_ANSWER : contains
+  QUESTION ||--o{ STUDENT_ANSWER : answered_in
+  ANSWER_OPTION ||--o{ STUDENT_ANSWER : selected
+  USER ||--o{ AI_CONVERSATION : owns
+  COURSE ||--o{ AI_CONVERSATION : contextualizes
+  AI_CONVERSATION ||--o{ AI_MESSAGE : contains
