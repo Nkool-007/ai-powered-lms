@@ -1,0 +1,136 @@
+name: SmartLMS CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+  pull_request:
+    branches:
+      - main
+      - develop
+
+permissions:
+  contents: read
+
+concurrency:
+  group: smartlms-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    name: Backend CI
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: smartlms_test
+          POSTGRES_PASSWORD: smartlms_test
+          POSTGRES_DB: smartlms_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U smartlms_test -d smartlms_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      APP_ENV: test
+      TEST_DATABASE_URL: postgresql+psycopg://smartlms_test:smartlms_test@localhost:5432/smartlms_test
+      JWT_SECRET_KEY: ci-test-only-secret-not-for-production
+      JWT_ACCESS_TOKEN_EXPIRES_HOURS: "2"
+      FRONTEND_ORIGIN: http://localhost:5173
+
+      # Dummy values only. AI tests must mock the provider.
+      LLM_PROVIDER: openai
+      OPENAI_API_KEY: ci-dummy-key-never-used
+      LLM_MODEL: ci-mock-model
+      EMBEDDING_MODEL: ci-mock-embedding-model
+      VECTOR_STORE_TYPE: pgvector
+      AI_REQUEST_TIMEOUT_SECONDS: "5"
+
+      RAG_TOP_K: "5"
+      RAG_MAX_COSINE_DISTANCE: "0.45"
+      RAG_CHUNK_WORDS: "220"
+      RAG_CHUNK_OVERLAP_WORDS: "40"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: |
+            backend/requirements.txt
+            backend/requirements-ci.txt
+
+      - name: Install backend dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements-ci.txt
+
+      - name: Install PostgreSQL client
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+
+      - name: Enable pgvector extension
+        env:
+          PGPASSWORD: smartlms_test
+        run: |
+          psql \
+            --host localhost \
+            --username smartlms_test \
+            --dbname smartlms_test \
+            --command "CREATE EXTENSION IF NOT EXISTS vector;"
+
+      - name: Backend lint
+        working-directory: backend
+        run: |
+          ruff check app tests run.py
+
+      - name: Backend tests
+        working-directory: backend
+        run: |
+          pytest -q
+
+  frontend:
+    name: Frontend CI
+    runs-on: ubuntu-latest
+
+    env:
+      VITE_API_BASE_URL: http://localhost:5000/api/v1
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Frontend lint
+        working-directory: frontend
+        run: npm run lint
+
+      - name: Frontend tests
+        working-directory: frontend
+        run: npm run test
+
+      - name: Production build
+        working-directory: frontend
+        run: npm run build

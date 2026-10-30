@@ -1,0 +1,2 @@
+# Add this dependency to the existing backend/requirements.txt
+gunicorn

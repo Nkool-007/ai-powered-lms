@@ -1,0 +1,14 @@
+.env.example
+.gitignore
+MERGE-INSTRUCTIONS.md
+PHASE7-DELIVERABLES.md
+README.md
+SECURITY-CHECKLIST.md
+backend/.dockerignore
+backend/Dockerfile
+docker-compose.yml
+docs/docker-setup.md
+docs/phase7-docker-notes.md
+docs/phase7-docker-test-plan.md
+frontend/.dockerignore
+frontend/Dockerfile

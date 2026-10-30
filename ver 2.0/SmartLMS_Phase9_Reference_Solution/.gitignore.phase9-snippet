@@ -1,0 +1,19 @@
+# Verify these are already ignored in the real repository.
+.env
+.env.*
+!.env.example
+
+*.pem
+*.key
+
+node_modules/
+frontend/dist/
+
+__pycache__/
+*.py[cod]
+
+.pytest_cache/
+.coverage
+htmlcov/
+
+.DS_Store

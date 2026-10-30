@@ -1,0 +1,45 @@
+# Environment / Secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+!.env.example
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/coverage/
+
+# Backend
+backend/.venv/
+backend/venv/
+backend/env/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/.pytest_cache/
+backend/htmlcov/
+backend/.coverage
+
+# Python
+*.py[cod]
+*.pyo
+*.pyd
+
+# Logs
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+
+# Operating System
+.DS_Store
+Thumbs.db
+
+# Temporary
+*.tmp
+*.swp
+*.swo

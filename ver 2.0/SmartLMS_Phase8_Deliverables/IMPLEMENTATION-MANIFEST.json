@@ -1,0 +1,30 @@
+{
+  "project": "EDUZZA SmartLMS",
+  "phase": 8,
+  "title": "Cloud Deployment & Production Environment",
+  "source": "Phase 8 - SmartLMS.pdf",
+  "reference_architecture": {
+    "frontend": "Amazon S3 + CloudFront",
+    "backend": "Amazon EC2 + Docker + Gunicorn + Flask",
+    "database": "Amazon RDS PostgreSQL + pgvector",
+    "ai": "External AI provider behind Flask"
+  },
+  "files": [
+    ".env.example",
+    "PHASE8-REVIEW-GATE.md",
+    "README_PHASE8_UPDATE.md",
+    "SUBMISSION-CHECKLIST.md",
+    "backend/Dockerfile.prod",
+    "backend/backend.env.example",
+    "backend/requirements-phase8-addition.txt",
+    "docs/aws-resource-plan.md",
+    "docs/cloud-architecture.md",
+    "docs/cloud-deployment.md",
+    "docs/phase8-deployment-notes.md",
+    "docs/phase8-deployment-test-plan.md",
+    "docs/phase8-production-checklists.md",
+    "docs/phase8-security-checklist.md",
+    "docs/phase8-urls.md",
+    "frontend/.env.production.example"
+  ]
+}
